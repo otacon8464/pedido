@@ -1,54 +1,147 @@
-README.md para API de Gestión de Pedidos
-# API REST de Gestión de Pedidos - Tienda Online
+# API REST de Gestión de Pedidos
 
-## 📋 Descripción del Proyecto
-Este proyecto es una API REST diseñada para la gestión integral de una tienda, permitiendo el registro de clientes, catálogo de productos y la creación de pedidos con detalle de productos asociados. La solución sigue principios de arquitectura limpia, inyección de dependencias y manejo de excepciones centralizado.
+Proyecto desarrollado como parte de una evaluación académica utilizando Spring Boot y PostgreSQL para gestionar clientes, productos y pedidos de una tienda online.
 
-## 🛠 Tecnologías Utilizadas
-- Java 21
-- Spring Boot 3.5.15 (Spring Data JPA, Web, Validation)
-- PostgreSQL (Base de datos relacional)
-- Maven (Gestor de dependencias)
-- Lombok (Reducción de código repetitivo)
-- JUnit 5 / Mockito (Pruebas unitarias)
+---
 
-## 🚀 Instrucciones de Ejecución
+## 📋 Descripción
 
-1. Requisitos previos:
-   - Tener instalado JDK 21.
-   - Tener instalado PostgreSQL.
+La aplicación permite administrar el proceso de ventas mediante una API REST, implementando operaciones para:
 
-2. Configuración de base de datos:
-   Ejecuta en tu PostgreSQL:
-   CREATE DATABASE db_pedidos;
+* Registrar clientes.
+* Registrar productos.
+* Crear pedidos con múltiples productos.
+* Consultar pedidos por ID.
+* Listar pedidos por cliente.
 
-3. Ejecución del proyecto:
-   # Compilar el proyecto
-   mvn clean install
-   
-   # Ejecutar la aplicación
-   mvn spring-boot:run
+El proyecto fue desarrollado siguiendo una arquitectura por capas (Controller - Service - Repository), utilizando DTOs, Mappers, manejo centralizado de excepciones y pruebas unitarias.
 
-## 🧪 Pruebas Unitarias
-El proyecto incluye un conjunto de pruebas unitarias desarrolladas con JUnit 5 y Mockito para garantizar la calidad del código y el correcto manejo de las reglas de negocio (específicamente en la capa de servicios).
+---
 
-- Cobertura: Se han implementado escenarios de éxito ("Happy Path") y manejo de excepciones ("Error Path").
-- Cómo ejecutar los tests:
-  mvn test
-- Resultado: Tras ejecutar el comando, se generará un reporte en la consola indicando el éxito de las pruebas.
+# 🛠 Tecnologías utilizadas
 
-## 🔌 Endpoints Principales
+* Java 21
+* Spring Boot 3.5.15
+* Spring Web
+* Spring Data JPA
+* Spring Validation
+* PostgreSQL
+* Maven
+* Lombok
+* JUnit 5
+* Mockito
 
-| Método | Endpoint | Descripción |
-| :--- | :--- | :--- |
-| POST | /api/clientes | Registrar un nuevo cliente. |
-| GET | /api/clientes | Listar todos los clientes registrados. |
-| POST | /api/productos | Registrar un producto en el catálogo. |
-| GET | /api/productos | Listar todos los productos. |
-| POST | /api/pedidos | Crear un pedido con una lista de productos. |
-| GET | /api/pedidos/{id} | Consultar el detalle de un pedido específico. |
-| GET | /api/pedidos/cliente/{clienteId} | Listar todos los pedidos de un cliente específico. |
+---
 
-## 📐 Arquitectura
-El proyecto se organiza bajo el patrón Controller-Service-Repository, garantizando la separación de responsabilidades y el cumplimiento de los principios SOLID.
+# 🚀 Requisitos
 
+Antes de ejecutar el proyecto es necesario contar con:
+
+* JDK 21
+* Maven
+* PostgreSQL
+
+Crear la base de datos:
+
+```sql
+CREATE DATABASE db_pedidos;
+```
+
+Configurar las credenciales de acceso en:
+
+```
+src/main/resources/application.properties
+```
+
+---
+
+# ▶️ Ejecución
+
+Compilar el proyecto:
+
+```bash
+mvn clean install
+```
+
+Ejecutar la aplicación:
+
+```bash
+mvn spring-boot:run
+```
+
+La API estará disponible en:
+
+```
+http://localhost:8080
+```
+
+---
+
+# 🔌 Endpoints
+
+## Clientes
+
+| Método | Endpoint           | Descripción           |
+| ------ | ------------------ | --------------------- |
+| POST   | /api/clientes      | Registrar cliente     |
+| GET    | /api/clientes      | Listar clientes       |
+| GET    | /api/clientes/{id} | Buscar cliente por ID |
+
+## Productos
+
+| Método | Endpoint       | Descripción        |
+| ------ | -------------- | ------------------ |
+| POST   | /api/productos | Registrar producto |
+| GET    | /api/productos | Listar productos   |
+
+## Pedidos
+
+| Método | Endpoint                         | Descripción                |
+| ------ | -------------------------------- | -------------------------- |
+| POST   | /api/pedidos                     | Crear pedido               |
+| GET    | /api/pedidos/{id}                | Buscar pedido por ID       |
+| GET    | /api/pedidos/cliente/{clienteId} | Listar pedidos por cliente |
+
+---
+
+# 📐 Arquitectura
+
+El proyecto sigue una arquitectura por capas (**Controller – Service – Repository**), promoviendo la separación de responsabilidades y facilitando el mantenimiento del código.
+
+Durante el desarrollo se aplicaron principios SOLID, utilizando interfaces para la capa de servicios, inyección de dependencias mediante Spring Boot, DTOs para el intercambio de información, Mappers para la conversión entre entidades y objetos de transferencia, y un manejo centralizado de excepciones mediante `GlobalExceptionHandler`.
+
+
+---
+
+# 🧪 Pruebas unitarias
+
+Se implementaron pruebas unitarias utilizando **JUnit 5** y **Mockito** para validar las principales reglas de negocio.
+
+### Casos implementados
+
+* ✔ Crear pedido correctamente (Happy Path).
+* ✔ Error cuando el stock es insuficiente.
+* ✔ Error cuando el pedido no existe.
+
+Ejecutar las pruebas:
+
+```bash
+mvn test
+```
+
+---
+
+# 📂 Evidencias
+
+El repositorio incluye una carpeta **evidencias/** con capturas del funcionamiento del proyecto:
+
+* Pruebas realizadas en Postman.
+* Registros almacenados en PostgreSQL.
+* Ejecución de pruebas unitarias.
+* Estructura del proyecto.
+
+---
+
+# 👨‍💻 Autor
+
+**Daniel Arana**
