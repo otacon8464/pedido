@@ -29,11 +29,17 @@ public class PedidoServiceImpl implements PedidoService {
     private final PedidoMapper pedidoMapper;
 
     @Override
-    @Transactional // Garantiza que si falla algo, el stock no se descuente mal
+    @Transactional
     public BaseResponse<PedidoResponse> crearPedido(PedidoRequest pedidoRequest) {
 
         Cliente cliente = clienteRepository.findById(pedidoRequest.getClienteId())
                 .orElseThrow(() -> new PedidoNotFoundException("Cliente no encontrado"));
+
+        Pedido pedido = Pedido.builder()
+                .cliente(cliente)
+                .fechaPedido(LocalDateTime.now())
+                .estado("CREADO")
+                .build();
 
         BigDecimal totalPedido = BigDecimal.ZERO;
         List<DetallePedido> detalles = new ArrayList<>();
@@ -58,21 +64,19 @@ public class PedidoServiceImpl implements PedidoService {
 
             DetallePedido detalle = DetallePedido.builder()
                     .producto(producto)
+                    .nombreProducto(producto.getNombre())
                     .cantidad(item.getCantidad())
                     .precioUnitario(producto.getPrecio())
                     .subTotal(subtotal)
+                    .pedido(pedido)
                     .build();
+
             detalles.add(detalle);
         }
 
 
-        Pedido pedido = Pedido.builder()
-                .cliente(cliente)
-                .fechaPedido(LocalDateTime.now())
-                .estado("CREADO") // Regla 8 Pág 5
-                .total(totalPedido)
-                .detalles(detalles)
-                .build();
+        pedido.setDetalles(detalles);
+        pedido.setTotal(totalPedido);
 
         pedidoRepository.save(pedido);
 
@@ -105,6 +109,20 @@ public class PedidoServiceImpl implements PedidoService {
         return BaseResponse.<List<PedidoResponse>>builder()
                 .codigo(200)
                 .mensaje("Lista de pedidos")
+                .objeto(lista)
+                .build();
+    }
+
+    @Override
+    public BaseResponse<List<PedidoResponse>> listarPedidosPorCliente(Long clienteId) {
+        List<PedidoResponse> lista = pedidoRepository.findByClienteId(clienteId)
+                .stream()
+                .map(pedidoMapper::toResponse)
+                .collect(Collectors.toList());
+
+        return BaseResponse.<List<PedidoResponse>>builder()
+                .codigo(200)
+                .mensaje("Lista de pedidos del cliente")
                 .objeto(lista)
                 .build();
     }

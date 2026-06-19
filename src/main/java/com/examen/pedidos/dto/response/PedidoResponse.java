@@ -28,7 +28,7 @@ public class PedidoResponse {
         private Long productoId;
         private String nombreProducto;
         private Integer cantidad;
-        private Double precioUnitario;
-        private Double subtotal;
+        private BigDecimal precioUnitario;
+        private BigDecimal subtotal;
     }
 }

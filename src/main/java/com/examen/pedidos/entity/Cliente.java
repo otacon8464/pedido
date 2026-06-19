@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "clientes")
@@ -32,6 +33,9 @@ public class Cliente {
 
     @Column(nullable = false)
     private LocalDateTime fechaRegistro;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> pedidos;
 
 
 

@@ -19,7 +19,10 @@ public class ClienteMapper {
             return ClienteResponse.builder()
                     .id(entity.getId())
                     .nombre(entity.getNombre())
+                    .apellido(entity.getApellido())
+                    .dni(entity.getDni())
                     .correo(entity.getCorreo())
+                    .fechaRegistro(entity.getFechaRegistro())
                     .build();
         }
 }

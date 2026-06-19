@@ -1,31 +1,30 @@
 package com.examen.pedidos.controller;
 
+import com.examen.pedidos.dto.request.ProductoRequest;
 import com.examen.pedidos.dto.response.ProductoResponse;
-
 import com.examen.pedidos.response.BaseResponse;
 import com.examen.pedidos.service.ProductoService;
-
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/productos")
+@RequiredArgsConstructor
 public class ProductoController {
 
     private final ProductoService productoService;
 
-    public ProductoController(ProductoService productoService) {
-        this.productoService = productoService;
-
+    @PostMapping
+    public ResponseEntity<BaseResponse<ProductoResponse>> crear(@Valid @RequestBody ProductoRequest request) {
+        return ResponseEntity.status(201).body(productoService.crearProducto(request));
     }
 
     @GetMapping
-    public BaseResponse<List<ProductoResponse>> listar() {
-        return productoService.listarProductos();
-    }
-
-    @GetMapping("/{id}")
-    public BaseResponse<ProductoResponse> buscarPorId(@PathVariable Long id) {
-        return productoService.buscarPorId(id);
+    public ResponseEntity<BaseResponse<List<ProductoResponse>>> listar() {
+        return ResponseEntity.ok(productoService.listarProductos());
     }
 }

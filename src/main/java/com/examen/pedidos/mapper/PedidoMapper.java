@@ -16,6 +16,21 @@ public class PedidoMapper {
                 .total(pedido.getTotal())
                 .estado(pedido.getEstado())
                 .fechaPedido(pedido.getFechaPedido())
+
+                .detalles(
+                        pedido.getDetalles().stream()
+                                .map(detalle -> PedidoResponse.DetalleResponse.builder()
+                                        .productoId(detalle.getProducto().getId())
+                                        .nombreProducto(detalle.getNombreProducto())
+                                        .cantidad(detalle.getCantidad())
+                                        .precioUnitario(detalle.getPrecioUnitario())
+                                        .subtotal(detalle.getSubTotal())
+                                        .build())
+                                .toList()
+                )
+
+
                 .build();
     }
+
 }

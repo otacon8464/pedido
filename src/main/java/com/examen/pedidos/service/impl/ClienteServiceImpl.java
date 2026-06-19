@@ -3,7 +3,7 @@ package com.examen.pedidos.service.impl;
 import com.examen.pedidos.dto.request.ClienteRequest;
 import com.examen.pedidos.dto.response.ClienteResponse;
 import com.examen.pedidos.entity.Cliente;
-import com.examen.pedidos.mapper.ClienteMapper; // Asegúrate de tener este mapper
+import com.examen.pedidos.mapper.ClienteMapper;
 import com.examen.pedidos.repository.ClienteRepository;
 import com.examen.pedidos.response.BaseResponse;
 import com.examen.pedidos.service.ClienteService;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor // Inyección por constructor automática
+@RequiredArgsConstructor
 public class ClienteServiceImpl implements ClienteService {
 
     private final ClienteRepository clienteRepository;

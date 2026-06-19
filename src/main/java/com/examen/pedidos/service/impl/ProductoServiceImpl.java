@@ -51,7 +51,7 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public BaseResponse <ProductoResponse> buscarPorId(Long id) {
         Producto producto = productoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado")); // Usa tu Exception personalizada
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
         return BaseResponse.<ProductoResponse>builder()
                 .codigo(200)

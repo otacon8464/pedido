@@ -11,4 +11,6 @@ public interface PedidoService {
     BaseResponse<PedidoResponse> crearPedido(PedidoRequest pedidoRequest);
     BaseResponse<PedidoResponse> buscarPorId(Long id);
     BaseResponse<List<PedidoResponse>> listarPedidos();
+    BaseResponse<List<PedidoResponse>> listarPedidosPorCliente(Long clienteId);
+
 }
